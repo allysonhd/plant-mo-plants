@@ -33,8 +33,6 @@ const GardenPhoto = ({ gardenId }) => {
 
         if (response.ok) {
           const data = await response.json();
-          // Assuming the endpoint returns a list of photos, we'll take the first one.
-          // You might need to adjust this logic if you expect multiple photos.
           if (data && data.length > 0) {
             setPhoto(data[0]);
           } else {
@@ -64,7 +62,7 @@ const GardenPhoto = ({ gardenId }) => {
   if (error) return <p>{error}</p>;
 
   const handleUploadClick = () => {
-    navigate("/photo-upload");
+    navigate(`/photo-upload/${gardenId}`);
   };
 
   return (
@@ -74,7 +72,7 @@ const GardenPhoto = ({ gardenId }) => {
           src={`data:image/jpeg;base64,${photo.photoImage}`}
           alt={photo.photoName}
           style={{
-            width: "800px",
+            width: "700px",
             height: "400px",
             objectFit: "cover",
             borderRadius: "8px",
@@ -89,7 +87,7 @@ const GardenPhoto = ({ gardenId }) => {
             height: "400px",
             borderRadius: "8px",
             overflow: "hidden",
-            cursor: "pointer", // Indicate it's clickable
+            cursor: "pointer",
           }}
           onClick={handleUploadClick}
         >
@@ -115,11 +113,11 @@ const GardenPhoto = ({ gardenId }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "white", // Set back to white
+              color: "white",
               fontSize: "1.5em",
               fontWeight: "bold",
               backgroundColor: "rgba(0, 0, 0, 0)",
-              opacity: 0, // Should be 0 initially
+              opacity: 0,
               transition: "opacity 0.3s ease, background-color 0.3s ease",
               textAlign: "center",
             }}

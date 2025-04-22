@@ -90,7 +90,7 @@ function App() {
                 element={<GardenDetails />}
               />
               <Route path="/comment/:plantId" element={<Comment />} />
-              <Route path="/photo-upload" element={<PhotoUpload />} />
+              <Route path="/photo-upload/:gardenId" element={<PhotoUpload />} />
               <Route path="/results" element={<NurseryList />} />
               <Route path="/nursery-search" element={<NurserySearch />} />
               <Route
