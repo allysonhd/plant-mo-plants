@@ -36,8 +36,7 @@ function PlantSearch() {
             setPlants("Forbidden");
           } else if (response.status === 401) {
             console.warn("You are not authenticated.");
-          } else {
-            throw new Error("Error fetching plants.");
+            setPlants("Unauthenticated");
           }
           return;
         }
@@ -48,7 +47,7 @@ function PlantSearch() {
         }
       } catch (error) {
         console.error("Fetch error:", error);
-        setPlants("error fetching plants");
+        setPlants("Error fetching plants");
       }
     }
     fetchPlants();
@@ -60,11 +59,12 @@ function PlantSearch() {
   if (plants === "Forbidden") {
     return <div className="title">Whoops! Go till your own land.</div>;
   }
-  if (plants === "Unauthorized") {
+
+  if (plants === "Unauthenticated") {
     return <div className="title">You must log in to view your garden.</div>;
   }
 
-  if (plants === "error fetching plants") {
+  if (plants === "Error fetching plants") {
     return (
       <div className="title">
         Uh oh. We seem to have misplaced your plants. Please try again.

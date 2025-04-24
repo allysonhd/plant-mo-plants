@@ -4,12 +4,12 @@ import com.launchcode.dama_devs.models.Plant;
 import com.launchcode.dama_devs.models.data.PlantRepository;
 import com.launchcode.dama_devs.services.PlantFilteringService;
 import com.launchcode.dama_devs.services.UserDetailsImpl;
-import com.launchcode.dama_devs.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +31,15 @@ public class PlantController {
     //otherwise, get all matching garden plants.
     @GetMapping("/{gardenId}/search-plants")
     public ResponseEntity<List<Plant>> getMatchingGardenPlants(@PathVariable Integer gardenId, @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam(required = false) String selectedPlantType) {
-        if (selectedPlantType != null && !selectedPlantType.isEmpty()) {
-            List<Plant> matchingTypePlants = plantFilteringService.filterGardenPlantsByType(gardenId, userDetails.getId(), selectedPlantType);
-            return ResponseEntity.status(HttpStatus.OK).body(matchingTypePlants);
-        } else {
-            List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId,userDetails.getId());
-            return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
+        try {
+            if (selectedPlantType != null && !selectedPlantType.isEmpty()) {
+                List<Plant> matchingTypePlants = plantFilteringService.filterGardenPlantsByType(gardenId, userDetails.getId(), selectedPlantType);
+                return ResponseEntity.status(HttpStatus.OK).body(matchingTypePlants);
+            } else {
+                List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId, userDetails.getId());
+                return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
+            }
+        } catch (SecurityException e){ throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
 
