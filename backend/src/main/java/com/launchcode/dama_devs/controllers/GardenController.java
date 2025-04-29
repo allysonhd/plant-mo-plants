@@ -87,14 +87,14 @@ public class GardenController {
     }
 
     @PostMapping("/{gardenId}/add-plant/{plantId}")
-    public ResponseEntity<GardenPlantDTO> addPlantToGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
-        GardenPlantDTO addPlantToGarden = gardenPlantService.addPlantToGarden(gardenId, plantId);
+    public ResponseEntity<GardenPlantDTO> addPlantToGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        GardenPlantDTO addPlantToGarden = gardenPlantService.addPlantToGarden(gardenId, plantId, userDetails.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
     }
 
     @DeleteMapping("/{gardenId}/remove-plant/{plantId}")
-    public ResponseEntity<GardenPlantDTO> removePlantFromGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
-        GardenPlantDTO removePlantFromGarden = gardenPlantService.removePlantFromGarden(gardenId, plantId);
+    public ResponseEntity<GardenPlantDTO> removePlantFromGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        GardenPlantDTO removePlantFromGarden = gardenPlantService.removePlantFromGarden(gardenId, plantId, userDetails.getId());
         return ResponseEntity.status(HttpStatus.OK).body(removePlantFromGarden);
     }
 }

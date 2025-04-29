@@ -5,6 +5,7 @@ import com.launchcode.dama_devs.models.Plant;
 import com.launchcode.dama_devs.models.data.GardenRepository;
 import com.launchcode.dama_devs.models.data.PlantRepository;
 import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,11 +44,15 @@ public class GardenPlantService {
     }
 
     //Add a plant to a garden. Create a DTO to send back with flag that plant was added
-    public GardenPlantDTO addPlantToGarden(Integer gardenId, Integer plantId) {
-        Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
+    public GardenPlantDTO addPlantToGarden(Integer gardenId, Integer plantId, Integer userId) {
+        Optional<Garden> gardenResult = gardenRepository.findByIdAndUser_userId(gardenId, userId);
         if (!gardenResult.isPresent()) {
             throw new IllegalArgumentException("Garden not found with ID" + gardenId);
         }
+        if (!gardenResult.get().getUser().getUserId().equals(userId)) {
+            throw new SecurityException("User does not own this garden.");
+        }
+
         Garden garden = gardenResult.get();
 
         Optional<Plant> plantResult = plantRepository.findById(plantId);
@@ -68,10 +73,13 @@ public class GardenPlantService {
     }
 
     //Remove a plant from a garden. send DTO back with flag that plant was removed.
-    public GardenPlantDTO removePlantFromGarden(Integer gardenId, Integer plantId) {
-        Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
+    public GardenPlantDTO removePlantFromGarden(Integer gardenId, Integer plantId, Integer userId) {
+        Optional<Garden> gardenResult = gardenRepository.findByIdAndUser_userId(gardenId, userId);
         if (!gardenResult.isPresent()) {
             throw new IllegalArgumentException("Garden not found with ID" + gardenId);
+        }
+        if (!gardenResult.get().getUser().getUserId().equals(userId)){
+            throw new SecurityException("User does not own this garden.");
         }
         Garden garden = gardenResult.get();
 

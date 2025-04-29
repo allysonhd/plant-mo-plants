@@ -24,7 +24,7 @@
   font-weight: bold;
   text-align: left;
   font-family: Arial, Helvetica, sans-serif;
-  color: #060306;
+  color: #131200;
   text-transform: capitalize;
 }
 
@@ -36,19 +36,19 @@
   font-size: 14px;
   font-weight: bold;
   font-family: inherit;
-  background-color: #9c27b0;
+  background-color: #9f0081;
   cursor: pointer;
   transition: border-color 0.25s;
   margin-bottom: 6px;
 }
 .plantCard-button:hover {
-  background-color: #630074;
-  border: #630074;
+  background-color: #73005d;
+  border: #73005d;
 }
 
 .plantCard-button:disabled {
   background-color: #ffffff;
-  color: #9c27b0;
+  color: #9f0081;
   border: none;
   pointer-events: none;
 }
@@ -60,9 +60,9 @@ button.plantCard-button:focus-visible {
 }
 .plantCard-secondary-button {
   border-radius: 8px;
-  border: 2px solid #9c27b0;
+  border: 2px solid #9f0081;
   padding: 12px;
-  color: black;
+  color: #131200;
   font-size: 14px;
   font-weight: bold;
   font-family: inherit;
@@ -73,8 +73,8 @@ button.plantCard-button:focus-visible {
 }
 
 .plantCard-secondary-button:hover {
-  background-color: #630074;
-  border: #630074;
+  background-color: #73005d;
+  border: #73005d;
   color: white;
 }
 .plantCard-secondary-button:disabled {

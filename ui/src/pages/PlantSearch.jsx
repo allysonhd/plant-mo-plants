@@ -16,25 +16,38 @@ function PlantSearch() {
     async function fetchPlants() {
       const token = localStorage.getItem("JWT_TOKEN");
       const csrfToken = localStorage.getItem("CSRF_TOKEN");
-
-      const response = await fetch(
-        `http://localhost:8080/api/plant/${gardenId}/search-plants?selectedPlantType=${selectedPlantType}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "X-XSRF-TOKEN": csrfToken,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          credentials: "include",
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/plant/${gardenId}/search-plants?selectedPlantType=${selectedPlantType}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-XSRF-TOKEN": csrfToken,
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          if (response.status === 403) {
+            console.warn("You do not own this garden.");
+            setPlants("Forbidden");
+          } else if (response.status === 401) {
+            console.warn("You are not authenticated.");
+            setPlants("Unauthenticated");
+          }
+          return;
         }
-      );
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!ignore) {
-        setPlants(data);
-        console.log(data);
+        if (!ignore) {
+          setPlants(data);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        setPlants("Error fetching plants");
       }
     }
     fetchPlants();
@@ -43,12 +56,27 @@ function PlantSearch() {
     };
   }, [gardenId, selectedPlantType]);
 
+  if (plants === "Forbidden") {
+    return <div className="title">Whoops! Go till your own land.</div>;
+  }
+
+  if (plants === "Unauthenticated") {
+    return <div className="title">You must log in to view your garden.</div>;
+  }
+
+  if (plants === "Error fetching plants") {
+    return (
+      <div className="title">
+        Uh oh. We seem to have misplaced your plants. Please try again.
+      </div>
+    );
+  }
+
   if (!plants) {
     return (
       <div className="title">Please wait while your plants are picked...</div>
     );
   }
-
   //this maps through the fetched list of plants and
   //assigns each plantObject to the "plant" prop to pass into the PlantCard function
   //aslo pass gardenId to PlantCard in prop "gardenId"

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class PlantFilteringService {
 
@@ -21,11 +20,15 @@ public class PlantFilteringService {
     @Autowired
     private PlantRepository plantRepository;
 
-    public List<Plant> filterPlantsByGardenFields(Integer gardenId) {
-        Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
+    public List<Plant> filterPlantsByGardenFields(Integer gardenId, Integer userId) {
+        Optional<Garden> gardenResult = gardenRepository.findByIdAndUser_userId(gardenId, userId);
         if (!gardenResult.isPresent()) {
             throw new RuntimeException("Garden ID not found" + gardenId);
         }
+        if (!gardenResult.get().getUser().getUserId().equals(userId)) {
+            throw new SecurityException("User does not own this garden.");
+        }
+
         Garden garden = gardenResult.get();
 
         Iterable<Plant> allPlants = plantRepository.findAll();
@@ -48,8 +51,8 @@ public class PlantFilteringService {
         return matchingGardenPlants;
     }
 
-    public List<Plant> filterGardenPlantsByType(Integer gardenId, String selectedPlantType) {
-        List<Plant> matchingGardenPlants = filterPlantsByGardenFields(gardenId);
+    public List<Plant> filterGardenPlantsByType(Integer gardenId, Integer userId, String selectedPlantType) {
+        List<Plant> matchingGardenPlants = filterPlantsByGardenFields(gardenId,userId);
 
         List<Plant> matchingPlantTypes = new ArrayList<>();
 
