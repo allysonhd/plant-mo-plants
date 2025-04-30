@@ -41,16 +41,16 @@ public class PhotoController {
         List<Garden> gardens = photoService.getGardensWithoutPhotosByUserId(userId);
         return ResponseEntity.ok(gardens);
     }
-    @PostMapping("/upload")
+
+    @PostMapping("/upload/{gardenId}")
     public ResponseEntity<Photo> uploadPhoto(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("photoName") String photoName,
-            @RequestParam("gardenId") Integer gardenId,
+            @PathVariable("gardenId") Integer gardenId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         Integer userId = userDetails.getId();
+        String photoName = file.getOriginalFilename();
         return ResponseEntity.ok(photoService.savePhoto(file, photoName, gardenId, userId));
     }
-
 //******* Gets the photos by user to display in the dashboard
 
     @GetMapping("/user")

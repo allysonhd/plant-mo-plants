@@ -63,6 +63,7 @@ public class SecurityConfig {
                         //here giving permissions to everyone to access the endpoint of contact
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/plant_images/**").permitAll()
+                        .requestMatchers("/api/photo/upload/**").authenticated()
                         .requestMatchers("/api/photo/user/**").authenticated()
                         .requestMatchers("/api/garden/user/**").authenticated()
                         .requestMatchers("/api/comment/user/**").authenticated()
