@@ -11,7 +11,7 @@ function PlantCard({ plant, gardenId, setRefresh }) {
     let ignore = false;
     async function fetchPlantInGardenStatus() {
       const token = localStorage.getItem("JWT_TOKEN");
-      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+      // const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
       const response = await fetch(
         `http://localhost:8080/api/garden/${gardenId}/get-status/${plantId}`,
@@ -19,7 +19,7 @@ function PlantCard({ plant, gardenId, setRefresh }) {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-XSRF-TOKEN": csrfToken,
+            // "X-XSRF-TOKEN": csrfToken,
             "Content-Type": "application/json",
             Accept: "application/json",
           },
@@ -64,7 +64,7 @@ function PlantCard({ plant, gardenId, setRefresh }) {
       if (response.ok) {
         setInGarden(dtoData.plantInGarden);
         if (setRefresh) {
-          setRefresh(prev => !prev);
+          setRefresh((prev) => !prev);
         }
       }
     } catch (error) {
@@ -98,7 +98,7 @@ function PlantCard({ plant, gardenId, setRefresh }) {
       if (response.ok) {
         setInGarden(dtoData.plantInGarden);
         if (setRefresh) {
-          setRefresh(prev => !prev);
+          setRefresh((prev) => !prev);
         }
       }
     } catch (error) {

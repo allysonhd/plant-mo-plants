@@ -3,7 +3,6 @@ package com.launchcode.dama_devs.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
@@ -44,7 +43,8 @@ public class Plant extends AbstractEntity {
     private Boolean resistsDeer;
     private Boolean toxicToAnimals;
 
-    //plant-garden relationship
+    //plant-garden relationship - creates a Join table in the database
+    //JsonBackReference tells Jackson when serializing Plant, treat it like the parent and do no include the list of associated gardens
     @JsonBackReference
     @ManyToMany(mappedBy = "plants")
     private final List<Garden> gardens = new ArrayList<>();

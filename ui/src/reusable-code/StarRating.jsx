@@ -11,7 +11,7 @@ const StarRating = () => {
     let ignore = false;
     async function fetchCurrentRating() {
       const token = localStorage.getItem("JWT_TOKEN");
-      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+      // const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
       const response = await fetch(
         `http://localhost:8080/api/plant-rating/current-rating/${plantId}`,
@@ -19,7 +19,7 @@ const StarRating = () => {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
-            "X-XSRF-TOKEN": csrfToken,
+            // "X-XSRF-TOKEN": csrfToken,
             "Content-Type": "application/json",
             Accept: "application/json",
           },
@@ -66,7 +66,7 @@ const StarRating = () => {
         setRating(dtoData.plantRating);
       }
     } catch (error) {
-      console.error("Error adding plant:", error);
+      console.error("Error adding plant rating:", error);
     }
   }
   return (

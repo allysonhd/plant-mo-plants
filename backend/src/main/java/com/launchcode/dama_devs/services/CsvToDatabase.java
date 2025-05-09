@@ -4,10 +4,10 @@ import com.launchcode.dama_devs.models.Plant;
 import com.launchcode.dama_devs.models.data.PlantRepository;
 import jakarta.transaction.Transactional;
 import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.csv.CSVFormat;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,8 +24,7 @@ public class CsvToDatabase {
     CSVFormat format = CSVFormat.DEFAULT.builder()
             .setHeader()
             .setSkipHeaderRecord(true)
-            .setTrim(true)
-            .get();
+            .setTrim(true).get();
 
     @Transactional
     public void insertRecords(String filePath) throws IOException {
@@ -33,7 +32,7 @@ public class CsvToDatabase {
         List<Plant> plantRecords = new ArrayList<>();
 
         try (FileReader fileReader = new FileReader(filePath);
-             CSVParser csvParser = new CSVParser(fileReader, format)) {
+             CSVParser csvParser = CSVParser.parse(fileReader, format)) {
 
             for (CSVRecord row : csvParser) {
 
@@ -81,10 +80,9 @@ public class CsvToDatabase {
                         toxicToAnimals
                 );
                 plantRecords.add(plant);
-
-                if (plantRepository.count()<90) {
-                    plantRepository.saveAll(plantRecords);
-                }
+            }
+            if (plantRepository.count() < 90) {
+                plantRepository.saveAll(plantRecords);
             }
         }
     }
