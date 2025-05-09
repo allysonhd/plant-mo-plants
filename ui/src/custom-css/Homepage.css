@@ -1,0 +1,69 @@
+.home h1 {
+  font-size: 64px;
+  font-weight: 600;
+  font-family: "Atma", cursive;
+  color: #131200;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.home h2 {
+  font-size: 21px;
+  font-weight: regular;
+  font-family: "Poppins", sans-serif;
+  color: #131200;
+  margin-bottom: 40px;
+}
+
+.home-button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  color: white;
+  font-size: 21px;
+  font-weight: medium;
+  font-family: "Atma", cursive;
+  background-color: #9f0081;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin-bottom: 6px;
+}
+.home-button:hover {
+  background-color: #73005d;
+  border: #73005d;
+}
+
+.home-button:disabled {
+  background-color: #ffffff;
+  color: #9f0081;
+  border: none;
+  pointer-events: none;
+}
+
+.home-button:focus,
+button.plantCard-button:focus-visible {
+  outline: 2px;
+  color: #ffffff;
+}
+
+.home h3 {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #131200;
+  margin-bottom: 5px;
+}
+.home-text-link {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #131200;
+  text-decoration: underline;
+}
+.home-text-link:hover {
+  color: #73005d;
+  font-weight: 600;
+}
