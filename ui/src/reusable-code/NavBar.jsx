@@ -77,9 +77,9 @@ const NavBar = () => {
             variant="h6"
             sx={{
               fontFamily: "Atma, sans-serif",
-              fontSize: "2rem",
+              fontSize: "1.5rem",
               fontWeight: 600,
-              color: "#3E2723",
+              color: "#131200",
             }}
           >
             🌱 Plant MO Plants 🌱
