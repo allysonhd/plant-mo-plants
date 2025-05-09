@@ -41,7 +41,8 @@ public class Garden extends AbstractEntity {
     @NotNull
     private String gardenSoil;
 
-    //garden-plant relationship
+    //garden-plant relationship - creates a Join Table in the database
+    //this annotation tells Jackson to treat Garden like the parent and include the plants during serialization
     @JsonManagedReference
     @ManyToMany
     private final List<Plant> plants = new ArrayList<>();

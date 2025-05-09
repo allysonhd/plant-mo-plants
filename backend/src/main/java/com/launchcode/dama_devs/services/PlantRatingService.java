@@ -75,7 +75,7 @@ public class PlantRatingService {
             return plantRatingDTO;
 
         } else {
-            //use constructor to create a new plant rating and save it to the repository
+            //use constructor from model to create a new plant rating and save it to the repository
             PlantRating newRating = new PlantRating(plantRating, user, plant);
             plantRatingRepository.save(newRating);
 

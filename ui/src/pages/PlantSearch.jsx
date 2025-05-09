@@ -15,7 +15,7 @@ function PlantSearch() {
     let ignore = false;
     async function fetchPlants() {
       const token = localStorage.getItem("JWT_TOKEN");
-      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+      // const csrfToken = localStorage.getItem("CSRF_TOKEN"); not needed for GET requests
       try {
         const response = await fetch(
           `http://localhost:8080/api/plant/${gardenId}/search-plants?selectedPlantType=${selectedPlantType}`,
@@ -23,7 +23,7 @@ function PlantSearch() {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
-              "X-XSRF-TOKEN": csrfToken,
+              // "X-XSRF-TOKEN": csrfToken,
               "Content-Type": "application/json",
               Accept: "application/json",
             },
